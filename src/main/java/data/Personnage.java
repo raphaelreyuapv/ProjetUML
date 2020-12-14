@@ -1,5 +1,7 @@
 package data;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Personnage {
 
     // Attributs
@@ -18,14 +20,14 @@ public class Personnage {
 
     // Constructeurs
 
-    public Personnage(){
+    public Personnage() {
         this.degree = 0;
         this.swimsuit = false;
         this.arrest = 0;
         this.drivingLicence = false;
     }
 
-    public Personnage(String pseudo){
+    public Personnage(String pseudo) {
         this.degree = 0;
         this.swimsuit = false;
         this.arrest = 0;
@@ -125,17 +127,53 @@ public class Personnage {
 
     // methodes
 
-    public Boolean alive(){
+    public Boolean alive() {
         boolean vivant = true;
 
-        if(this.life <= 0 || this.hunger <= 0 || this.hydratation <= 0 || this.moral <= 0 || this.arrest >= 3){
+        if (this.life <= 0 || this.hunger <= 0 || this.hydratation <= 0 || this.moral <= 0 || this.arrest >= 3) {
             vivant = false;
         }
         return vivant;
     }
 
-    public void movement(Case a){
+    public void movement(Case a) {
         this.position = a;
-    }
 
+
+        // gestion des pieges
+        int accidentRoll;
+        int piegeRoll;
+        if ( (a instanceof Deplacement) || (a instanceof Foret) ){
+            accidentRoll = ThreadLocalRandom.current().nextInt(1, 101);
+            if (a instanceof Foret && accidentRoll <= 10){
+                life -= 10;
+            }
+                else if ( (a instanceof Deplacement) && (accidentRoll <= 5) ){
+                piegeRoll = ThreadLocalRandom.current().nextInt(1, 4);
+                if (a instanceof Route) {
+                    if (piegeRoll == 1) { // Feu rouge
+                        life -= 1;
+                    } else if (piegeRoll == 2) { // Police
+                        moral -= 1;
+                        arrest += 1;
+                    } else if (piegeRoll == 3) { // Nid de poule
+                        hydratation -= 2;
+                        hunger -= 2;
+                    }
+                    if (a instanceof Trottoir) {
+                        if (piegeRoll == 1) { // Banane
+                            life -= 3;
+                        } else if (piegeRoll == 2) { // Poussette
+                            moral -= 2;
+                        } else if (piegeRoll == 3) { // Déjection canine
+                            hunger -= 1;
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+    }
 }
