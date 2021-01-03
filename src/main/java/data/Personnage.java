@@ -150,17 +150,18 @@ public class Personnage {
             }
                 else if ( (a instanceof Deplacement) && (accidentRoll <= 5) ){
                 piegeRoll = ThreadLocalRandom.current().nextInt(1, 4);
-                if (a instanceof Route) {
-                    if (piegeRoll == 1) { // Feu rouge
-                        life -= 1;
-                    } else if (piegeRoll == 2) { // Police
-                        moral -= 1;
-                        arrest += 1;
-                    } else if (piegeRoll == 3) { // Nid de poule
-                        hydratation -= 2;
-                        hunger -= 2;
+                    if (a instanceof Route) {
+                        if (piegeRoll == 1) { // Feu rouge
+                            life -= 1;
+                        } else if (piegeRoll == 2) { // Police
+                            moral -= 1;
+                            arrest += 1;
+                        } else if (piegeRoll == 3) { // Nid de poule
+                            hydratation -= 2;
+                            hunger -= 2;
+                        }
                     }
-                    if (a instanceof Trottoir) {
+                    else if (a instanceof Trottoir) {
                         if (piegeRoll == 1) { // Banane
                             life -= 3;
                         } else if (piegeRoll == 2) { // Poussette
