@@ -2,8 +2,8 @@ package data;
 
 public class Foret extends Case {
 
-    public Foret(int nX, int nY){
-        super(nX, nY);
+    public Foret(float x, float y, float width, float height){
+        super(x, y,width,height);
     }
 
 }

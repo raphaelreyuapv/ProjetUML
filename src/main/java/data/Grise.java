@@ -2,8 +2,8 @@ package data;
 
 public class Grise extends Case {
 
-    public Grise(int nX, int nY){
-        super(nX, nY);
+    public Grise(float x, float y, float width, float height){
+        super(x, y,width,height);
     }
 
 }

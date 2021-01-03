@@ -22,7 +22,7 @@ public class Presse extends Personnage{
 
     public void movement(Case a){
         super.movement(a);
-        if(a instanceof Batiment){
+        /*if(a instanceof Batiment){
             this.life -= 1;
             this.hydratation -= 1;
             this.hunger-= 1;
@@ -32,5 +32,7 @@ public class Presse extends Personnage{
         else {
             this.moral -= 2;
         }
+
+         */
     }
 }

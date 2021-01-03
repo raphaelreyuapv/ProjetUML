@@ -2,13 +2,14 @@ import org.gradle.internal.os.OperatingSystem
 
 apply plugin:'java'
 
-project.ext.lwjglVersion = "3.2.3"
+//project.ext.lwjglVersion = "3.2.3"
+//project.ext.lwjglVersion = "2.9.3"
 switch (OperatingSystem.current()) {
     case OperatingSystem.LINUX:
-        project.ext.lwjglNatives = "natives-linux"
+        //project.ext.lwjglNatives = "natives-linux"
         break
     case OperatingSystem.WINDOWS:
-        project.ext.lwjglNatives = "natives-windows"
+        //project.ext.lwjglNatives = "natives-windows"
         break
 }
 
@@ -16,7 +17,7 @@ repositories {
 	mavenCentral()
 }
 
-dependencies {
+/*dependencies {
 	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
 
 	implementation "org.lwjgl:lwjgl"
@@ -39,4 +40,9 @@ dependencies {
 	runtimeOnly "org.lwjgl:lwjgl-opengl::$lwjglNatives"
 	runtimeOnly "org.lwjgl:lwjgl-par::$lwjglNatives"
 	runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
+}*/
+dependencies {
+	compile group: 'org.lwjgl.lwjgl', name: 'lwjgl', version: '2.9.2'
+    compile group: 'org.slick2d', name: 'slick2d-core', version: '1.0.2'
+
 }
