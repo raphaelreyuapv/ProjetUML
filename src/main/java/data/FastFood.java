@@ -2,7 +2,7 @@ package data;
 
 public class FastFood extends Case{
 
-    public FastFood(int nX, int nY){
-        super(nX, nY);
+    public FastFood(float x, float y, float width, float height){
+        super(x, y,width,height);
     }
 }

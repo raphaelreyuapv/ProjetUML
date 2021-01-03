@@ -2,7 +2,7 @@ package data;
 
 public class Universite extends Case{
 
-    public Universite(int nX, int nY){
-        super(nX, nY);
+    public Universite(float x, float y, float width, float height){
+        super(x, y,width,height);
     }
 }

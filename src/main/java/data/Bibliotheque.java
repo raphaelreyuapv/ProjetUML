@@ -1,7 +1,7 @@
 package data;
 
 public class Bibliotheque extends Batiment {
-    public Bibliotheque(int nX, int nY){
-        super(nX, nY);
+    public Bibliotheque(float x, float y, float width, float height){
+        super(x, y,width,height);
     }
 }

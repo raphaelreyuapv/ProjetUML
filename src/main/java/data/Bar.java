@@ -2,7 +2,7 @@ package data;
 
 public class Bar extends Case{
 
-    public Bar(int nX, int nY){
-        super(nX, nY);
+    public Bar(float x, float y, float width, float height){
+        super(x, y,width,height);
     }
 }
