@@ -21,7 +21,7 @@ public class Hippie extends Personnage{
 
     public void movement(Case a){
         super.movement(a);
-        if(a instanceof Batiment){
+        /*if(a instanceof Batiment){
             this.life -= 0.5;
             this.hydratation -= 0.5;
             this.hunger-= 0.5;
@@ -32,6 +32,6 @@ public class Hippie extends Personnage{
             this.life -= 2;
             this.hydratation -= 2;
             this.hunger -= 2;
-        }
+        }*/
     }
 }
