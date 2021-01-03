@@ -7,8 +7,8 @@ public class Personnage {
     // Attributs
 
     String pseudo;
-    int degree;
-    int chance;
+    int degree; //nb de diplomes
+    int chance; //bonus pour le prochain diplome
     int life;
     int hydratation;
     int hunger;
@@ -136,19 +136,50 @@ public class Personnage {
         return vivant;
     }
 
+    public void verifAttributs(){
+        if(moral > 100){
+            moral = 100;
+        }
+        if(hydratation > 100){
+            hydratation = 100;
+        }
+        if(hunger > 100){
+            hunger = 100;
+        }
+        if(moral < 0){
+            moral = 0;
+        }
+        if(hydratation < 0){
+            hydratation = 0;
+        }
+        if(hunger < 0){
+            hunger = 0;
+        }
+        if(life < 0){
+            life = 0;
+        }
+        if(life > 100){
+            life = 100;
+        }
+
+    }
+
     public void movement(Case a) {
         this.position = a;
-
 
         // gestion des pieges
         int accidentRoll;
         int piegeRoll;
-        if ( (a instanceof Deplacement) || (a instanceof Foret) ){
+        int livreGL;
+        int obtentionDiplome;
+        int enonceExam;
+
+        if ((a instanceof Deplacement) || (a instanceof Foret)) {
             accidentRoll = ThreadLocalRandom.current().nextInt(1, 101);
-            if (a instanceof Foret && accidentRoll <= 10){
+            if (a instanceof Foret && accidentRoll <= 10) {
                 life -= 10;
             }
-                else if ( (a instanceof Deplacement) && (accidentRoll <= 5) ){
+            else if ((a instanceof Deplacement) && (accidentRoll <= 5)) {
                 piegeRoll = ThreadLocalRandom.current().nextInt(1, 4);
                 if (a instanceof Route) {
                     if (piegeRoll == 1) { // Feu rouge
@@ -160,20 +191,61 @@ public class Personnage {
                         hydratation -= 2;
                         hunger -= 2;
                     }
-                    if (a instanceof Trottoir) {
-                        if (piegeRoll == 1) { // Banane
-                            life -= 3;
-                        } else if (piegeRoll == 2) { // Poussette
-                            moral -= 2;
-                        } else if (piegeRoll == 3) { // Déjection canine
-                            hunger -= 1;
-                        }
+                }
+
+                else if (a instanceof Trottoir) {
+                    if (piegeRoll == 1) { // Banane
+                        life -= 3;
+                    } else if (piegeRoll == 2) { // Poussette
+                        moral -= 2;
+                    } else if (piegeRoll == 3) { // Déjection canine
+                        hunger -= 1;
                     }
                 }
             }
         }
 
+        ///////////
+        if(a instanceof Batiment){
+            if(a instanceof Maison){
+                moral += 10;
+                hunger += 10;
+                hydratation += 10;
+            }
+            else if(a instanceof Bibliotheque){
+                livreGL = ThreadLocalRandom.current().nextInt(1, 101);
+                moral += 20;
+                if(livreGL <= 5){
+                    chance += 10;
+                }
+            }
 
+            else if(a instanceof FastFood){
+                hunger += 25;
+                hydratation += 10;
+                moral += 10;
+                life -= 5;
+            }
 
+            else if(a instanceof Universite){
+                obtentionDiplome = ThreadLocalRandom.current().nextInt(1, 101);
+                if(obtentionDiplome <= 30 + chance){
+                    degree += 1;
+                    chance = 0;
+                    moral += 5;
+                }
+            }
+
+            else if(a instanceof Bar){
+                hydratation += 25;
+                moral += 10;
+                life -= 3;
+                enonceExam = ThreadLocalRandom.current().nextInt(1, 101);
+                if(enonceExam <= 5){
+                    chance += 5;
+                }
+            }
+        }
+        verifAttributs();
     }
 }
