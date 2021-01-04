@@ -4,7 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class CaseGrille {
 
-    public Case[][] map;
+    public static Case[][] map;
     public int xstartingpoint,ystartingpoint;
 
     public CaseGrille(){
@@ -67,8 +67,8 @@ public class CaseGrille {
             }
         }
 
-    public Case getCase(int x,int y){
-        return map[x][y];
+    public  static Case getCase(float x,float y){
+        return map[(int) x][(int) y];
     }
 
     public CaseGrille(int[][] loadmap){

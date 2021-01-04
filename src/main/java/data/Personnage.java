@@ -5,6 +5,7 @@ import org.newdawn.slick.opengl.Texture;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+
 public class Personnage {
 
     // Attributs
@@ -23,7 +24,6 @@ public class Personnage {
     Case position;
     private int width,height,health;
     private float speed,x,y;
-    private Case startTile;
     private boolean init = true;
 
     // Constructeurs
@@ -32,6 +32,7 @@ public class Personnage {
         this.texture = tex;
         this.x = caseDepart.positionX;
         this.y = caseDepart.positionY;
+        this.position = data.CaseGrille.getCase(caseDepart.positionX/64,caseDepart.positionY/64);
         this.speed=speed;
         this.width = width;
         this.height = height;
@@ -57,18 +58,44 @@ public class Personnage {
         if(init){
             init = false;//premiere init de la clock doit etre skip parceque c'est le jeu vien de se lancer et notre perso n'a pas a bouger
         }else {
+            Case tempo;
             while(Keyboard.next()) {
-                if (Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState()){
-                    x += 64;
+                if (Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState() && position.positionX/64+1<20){
+
+
+                    tempo = data.CaseGrille.getCase(position.positionX/64+1,position.positionY/64);
+
+                    if ( (!(tempo instanceof Grise) && !(tempo instanceof Eau)) || ((tempo instanceof Eau) && swimsuit)) {
+                        x += 64;
+                        movement(tempo);
+                    }
+
                 }
-                else if (Keyboard.getEventKey() == Keyboard.KEY_UP && Keyboard.getEventKeyState()){
-                    y -= 64;
+                else if (Keyboard.getEventKey() == Keyboard.KEY_UP && Keyboard.getEventKeyState() && position.positionY/64-1>=0){
+
+                    tempo = data.CaseGrille.getCase(position.positionX/64,position.positionY/64-1);
+
+                    if ( (!(tempo instanceof Grise) && !(tempo instanceof Eau)) || ((tempo instanceof Eau) && swimsuit)) {
+                        y -= 64;
+                        movement(tempo);
+                    }
+
                 }
-                else if (Keyboard.getEventKey() == Keyboard.KEY_DOWN && Keyboard.getEventKeyState()){
-                    y +=64;
+                else if (Keyboard.getEventKey() == Keyboard.KEY_DOWN && Keyboard.getEventKeyState() && position.positionY/64+1<15){
+                    tempo = data.CaseGrille.getCase(position.positionX/64,position.positionY/64+1);
+
+                    if ( (!(tempo instanceof Grise) && !(tempo instanceof Eau)) || ((tempo instanceof Eau) && swimsuit)) {
+                        y += 64;
+                        movement(tempo);
+                    }
                 }
-                else if (Keyboard.getEventKey() == Keyboard.KEY_LEFT && Keyboard.getEventKeyState()){
-                    x -= 64;
+                else if (Keyboard.getEventKey() == Keyboard.KEY_LEFT && Keyboard.getEventKeyState() && position.positionX/64-1>=0){
+                    tempo = data.CaseGrille.getCase(position.positionX/64-1,position.positionY/64);
+
+                    if ( (!(tempo instanceof Grise) && !(tempo instanceof Eau)) || ((tempo instanceof Eau) && swimsuit)) {
+                        x -= 64;
+                        movement(tempo);
+                    }
                 }
             }
 
