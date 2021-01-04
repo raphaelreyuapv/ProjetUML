@@ -27,11 +27,17 @@ public class Boot {
         glOrtho(0,1280,960,0,1,-1);
         glMatrixMode(GL_MODELVIEW);
         glEnable(GL_TEXTURE_2D);
-
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         Texture t = LoadTexture("desert.png");
         CaseGrille grid = new CaseGrille();
+        Hippie joueur = new Hippie(grid.getCase(grid.xstartingpoint,grid.ystartingpoint));
         while (!Display.isCloseRequested()) {
+            Clock.update();
+            joueur.Update();
+
             grid.Draw();
+            joueur.Draw();
             //DrawQuadTex(t,0,0,64,64);
             Display.update();
             Display.sync(60);

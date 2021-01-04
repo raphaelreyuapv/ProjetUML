@@ -1,5 +1,7 @@
 package data;
 
+import org.newdawn.slick.opengl.Texture;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Personnage {
@@ -16,11 +18,22 @@ public class Personnage {
     boolean swimsuit;
     int arrest;
     boolean drivingLicence;
+    Texture texture;
     Case position;
+    private int width,height,health;
+    private float speed,x,y;
+    private Case startTile;
+    private boolean init = true;
 
     // Constructeurs
 
-    public Personnage() {
+    public Personnage(Texture tex,Case caseDepart,int width,int height,float speed) {
+        this.texture = tex;
+        this.x = caseDepart.positionX;
+        this.y = caseDepart.positionY;
+        this.speed=speed;
+        this.width = width;
+        this.height = height;
         this.degree = 0;
         this.swimsuit = false;
         this.arrest = 0;
@@ -33,6 +46,18 @@ public class Personnage {
         this.arrest = 0;
         this.drivingLicence = false;
         this.pseudo = pseudo;
+    }
+
+    public void Draw(){
+        Boot.DrawQuadTex(texture,x,y,width,height);
+    }
+
+    public void Update(){
+        if(init){
+            init = false;//premiere init de la clock doit etre skip parceque c'est le jeu vien de se lancer et notre perso n'a pas a bouger
+        }else {
+            x += Clock.Delta() * speed;
+        }
     }
 
     // get and set

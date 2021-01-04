@@ -2,8 +2,8 @@ package data;
 
 public class Hippie extends Personnage{
 
-    public Hippie(){
-        super();
+    public Hippie(Case caseDep){
+        super(Boot.LoadTexture("hippie.png"),caseDep,64,64,15);
         this.life = 75;
         this.hydratation = 50;
         this.hunger = 50;

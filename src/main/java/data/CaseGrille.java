@@ -5,10 +5,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class CaseGrille {
 
     public Case[][] map;
+    public int xstartingpoint,ystartingpoint;
 
     public CaseGrille(){
         int rng;
-        boolean maison=false,universite=false;
+        boolean maison=false,universite=false,fastfood=false,bar=false;
         map = new Case[20][15];
         for (int i = 0;i < map.length; i++){
             for(int j = 0;j < map[i].length;j++){
@@ -28,6 +29,8 @@ public class CaseGrille {
                     case 2:
                         if(!maison) {
                             map[i][j] = new Maison(i * 64, j * 64, 64, 64);
+                            xstartingpoint = i;
+                            ystartingpoint = j;
                             maison=true;
                         }else {
                             map[i][j] = new Route(i*64,j*64,64,64);
@@ -39,6 +42,22 @@ public class CaseGrille {
                     case 4:
                         map[i][j] = new Eau(i*64,j*64,64,64);
                         break;
+                    case 5:
+                        if(!fastfood) {
+                            map[i][j] = new FastFood(i * 64, j * 64, 64, 64);
+                            fastfood=true;
+                        }else{
+                            map[i][j]=new Grise(i * 64, j * 64, 64, 64);
+                        }
+                        break;
+                    case 6:
+                        if(!bar){
+                            map[i][j] = new Bar(i * 64, j * 64, 64, 64);
+                            bar=true;
+                        }else{
+                            map[i][j]=new Foret(i * 64, j * 64, 64, 64);
+                        }
+                        break;
                     default:
                         //this should never happen but who knows
                         map[i][j] = new Trottoir(i*64,j*64,64,64);
@@ -48,6 +67,9 @@ public class CaseGrille {
             }
         }
 
+    public Case getCase(int x,int y){
+        return map[x][y];
+    }
 
     public CaseGrille(int[][] loadmap){
         map = new Case[20][15];

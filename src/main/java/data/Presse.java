@@ -2,8 +2,8 @@ package data;
 
 public class Presse extends Personnage{
 
-    public Presse(){
-        super();
+    public Presse(Case caseDep){
+        super(Boot.LoadTexture("hipster.png"),caseDep,64,64,2);
         this.life = 100;
         this.hydratation = 75;
         this.hunger = 75;
