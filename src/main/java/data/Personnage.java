@@ -1,5 +1,6 @@
 package data;
 
+import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.opengl.Texture;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -56,7 +57,21 @@ public class Personnage {
         if(init){
             init = false;//premiere init de la clock doit etre skip parceque c'est le jeu vien de se lancer et notre perso n'a pas a bouger
         }else {
-            x += Clock.Delta() * speed;
+            while(Keyboard.next()) {
+                if (Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState()){
+                    x += 64;
+                }
+                else if (Keyboard.getEventKey() == Keyboard.KEY_UP && Keyboard.getEventKeyState()){
+                    y -= 64;
+                }
+                else if (Keyboard.getEventKey() == Keyboard.KEY_DOWN && Keyboard.getEventKeyState()){
+                    y +=64;
+                }
+                else if (Keyboard.getEventKey() == Keyboard.KEY_LEFT && Keyboard.getEventKeyState()){
+                    x -= 64;
+                }
+            }
+
         }
     }
 
