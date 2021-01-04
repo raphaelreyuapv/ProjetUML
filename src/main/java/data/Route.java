@@ -4,6 +4,7 @@ public class Route extends Deplacement {
 
     public Route(float x, float y, float width, float height){
         super(x, y,width,height);
+        texture = Boot.LoadTexture("route.png");
     }
 
 }

@@ -1,15 +1,80 @@
 package data;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class CaseGrille {
 
     public Case[][] map;
 
     public CaseGrille(){
+        int rng;
+        boolean maison=false,universite=false;
         map = new Case[20][15];
         for (int i = 0;i < map.length; i++){
             for(int j = 0;j < map[i].length;j++){
-                map[i][j] = new Case(i * 64,j * 64,64,64);
+                rng= ThreadLocalRandom.current().nextInt(0,10+1);
+                switch(rng){
+                    case 0:
+                        map[i][j] = new Route(i*64,j*64,64,64);
+                        break;
+                    case 1:
+                        if(!universite) {
+                            map[i][j] = new Universite(i * 64, j * 64, 64, 64);
+                            universite=true;
+                        }else {
+                            map[i][j] = new Trottoir(i*64,j*64,64,64);
+                        }
+                        break;
+                    case 2:
+                        if(!maison) {
+                            map[i][j] = new Maison(i * 64, j * 64, 64, 64);
+                            maison=true;
+                        }else {
+                            map[i][j] = new Route(i*64,j*64,64,64);
+                        }
+                        break;
+                    case 3:
+                        map[i][j] = new Trottoir(i*64,j*64,64,64);
+                        break;
+                    case 4:
+                        map[i][j] = new Eau(i*64,j*64,64,64);
+                        break;
+                    default:
+                        //this should never happen but who knows
+                        map[i][j] = new Trottoir(i*64,j*64,64,64);
+                        break;
+                }
+                }
             }
+        }
+
+
+    public CaseGrille(int[][] loadmap){
+        map = new Case[20][15];
+        for (int i = 0;i < map.length; i++){
+            for (int j = 0;j<map[i].length;j++){
+                switch (loadmap[i][j]){
+                    case 0:
+                        map[i][j] = new Route(i*64,j*64,64,64);
+                        break;
+                    case 1:
+                        map[i][j] = new Universite(i*64,j*64,64,64);
+                        break;
+                    case 2:
+                        map[i][j] = new Maison(i*64,j*64,64,64);
+                        break;
+                    case 3:
+                        map[i][j] = new Trottoir(i*64,j*64,64,64);
+                        break;
+                    default:
+                        //this should never happen but who knows
+                        map[i][j] = new Trottoir(i*64,j*64,64,64);
+                        break;
+
+
+                }
+            }
+
         }
     }
 
