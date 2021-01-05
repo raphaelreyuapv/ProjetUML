@@ -8,6 +8,7 @@ public class MainMenu {
 
     private Texture bg;
     private UI menuUI;
+    private boolean oneclick;//variable boolean pour empecher de recuperer des inputs sur plus de 1 frame
     public MainMenu(){
         bg = Boot.LoadTexture("mainmenu.png");
         menuUI = new UI();
@@ -15,11 +16,12 @@ public class MainMenu {
     }
 
     public void updateButtons(){
-        if(Mouse.isButtonDown(0)) {
+        if(Mouse.isButtonDown(0) && !oneclick) {
             if (menuUI.isButtonClicked("Play")){
-                StateManager.setState(StateManager.GameState.GAME);
+                StateManager.setState(StateManager.GameState.CHARSELECT);
             }
         }
+        oneclick=Mouse.isButtonDown(0);
     }
 
     public void update(){

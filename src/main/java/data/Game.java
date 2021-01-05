@@ -7,13 +7,17 @@ public class Game {
     private CaseGrille grid;
     private Personnage joueur;
 
-    public Game(String map){
+    public Game(String map,String perso){
         if(map==null){
             grid = new CaseGrille();
-            joueur = new Hippie(grid.getCase(grid.xstartingpoint,grid.ystartingpoint));
         }else {
             grid = new CaseGrille(map);
-            joueur = new Hippie(grid.getCase(grid.xstartingpoint,grid.ystartingpoint));
+        }
+        switch(perso){
+            case "Hippie":joueur = new Hippie(grid.getCase(grid.xstartingpoint,grid.ystartingpoint));break;
+            case "Standard":joueur = new Standard(grid.getCase(grid.xstartingpoint,grid.ystartingpoint));break;
+            case "Presse":joueur = new Presse(grid.getCase(grid.xstartingpoint,grid.ystartingpoint));break;
+            default:joueur = new Hippie(grid.getCase(grid.xstartingpoint,grid.ystartingpoint));break;
         }
 
     }
