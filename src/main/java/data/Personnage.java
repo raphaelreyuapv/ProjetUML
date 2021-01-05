@@ -60,6 +60,7 @@ public class Personnage {
         }else {
             Case tempo;
             while(Keyboard.next()) {
+
                 if (Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState() && position.positionX/64+1<20){
 
 

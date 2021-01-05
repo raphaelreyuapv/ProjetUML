@@ -20,7 +20,7 @@ public class StateManager {
                 break;
             case GAME:
                 if (game == null){
-                    game = new Game(null);
+                    game = new Game("sauvegarde");
                 }
                 game.update();
                 break;

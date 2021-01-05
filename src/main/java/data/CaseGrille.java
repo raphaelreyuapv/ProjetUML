@@ -1,5 +1,6 @@
 package data;
 
+import java.io.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CaseGrille {
@@ -71,23 +72,46 @@ public class CaseGrille {
         return map[(int) x][(int) y];
     }
 
-    public CaseGrille(int[][] loadmap){
+    public CaseGrille(String savename){
+        String data = "";
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(savename));
+            data = br.readLine();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         map = new Case[20][15];
         for (int i = 0;i < map.length; i++){
             for (int j = 0;j<map[i].length;j++){
-                switch (loadmap[i][j]){
-                    case 0:
+                switch (data.substring(i*15+j,i*15+j+1)){
+                    case "0":
                         map[i][j] = new Route(i*64,j*64,64,64);
                         break;
-                    case 1:
+                    case "1":
                         map[i][j] = new Universite(i*64,j*64,64,64);
                         break;
-                    case 2:
+                    case "2":
                         map[i][j] = new Maison(i*64,j*64,64,64);
+                        this.xstartingpoint=i;
+                        this.ystartingpoint=j;
                         break;
-                    case 3:
+                    case "3":
                         map[i][j] = new Trottoir(i*64,j*64,64,64);
                         break;
+                    case "4":
+                        map[i][j] = new Eau(i*64,j*64,64,64);
+                        break;
+                    case "5":
+                        map[i][j] = new FastFood(i*64,j*64,64,64);
+                        break;
+                    case "6":
+                        map[i][j] = new Grise(i*64,j*64,64,64);
+                        break;
+                    case "7":
+                        map[i][j] = new Bar(i*64,j*64,64,64);
+                        break;
+                    case "8":
+                        map[i][j] = new Foret(i*64,j*64,64,64);
                     default:
                         //this should never happen but who knows
                         map[i][j] = new Trottoir(i*64,j*64,64,64);
@@ -98,6 +122,78 @@ public class CaseGrille {
             }
 
         }
+    }
+    /*
+    0=Route;
+    1=Universite
+    2=Maison
+    3=Trottoir
+    4=Eau
+    5=Fastfood
+    6=Grise
+    7=Bar
+    8=Foret
+
+     */
+
+    public void SaveGrille(String savename){
+        String data = "";
+        for (int i= 0; i < 20;i++){
+            for (int j = 0;j<15;j++){
+                data+= getIDFromCase(map[i][j]);
+            }
+        }
+        try {
+            File file = new File(savename);
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write(data);
+            bw.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    /*
+    0=Route;
+    1=Universite
+    2=Maison
+    3=Trottoir
+    4=Eau
+    5=Fastfood
+    6=Grise
+    7=Bar
+    8=Foret
+
+     */
+    public String getIDFromCase(Case c){
+        if(c instanceof Route){
+            return "0";
+        }else if(c instanceof Universite){
+            return "1";
+        }
+        else if(c instanceof Maison){
+            return "2";
+        }
+        else if(c instanceof Trottoir){
+            return "3";
+        }
+        else if(c instanceof Eau){
+            return "4";
+        }
+        else if(c instanceof FastFood){
+            return "5";
+        }
+        else if(c instanceof Grise){
+            return "6";
+        }
+        else if (c instanceof Bar){
+            return "7";
+        }
+        else if (c instanceof Foret){
+            return "8";
+        }
+    return "0";
+
     }
 
     public void Draw(){
