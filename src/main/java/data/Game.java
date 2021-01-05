@@ -1,11 +1,13 @@
 package data;
 
+import UI.UI;
 import org.lwjgl.input.Keyboard;
 
 public class Game {
 
     private CaseGrille grid;
     private Personnage joueur;
+    private UI gameUI = new UI();
 
     public Game(String map,String perso){
         if(map==null){
@@ -26,6 +28,12 @@ public class Game {
 
     public void update(){
         grid.Draw();
+        gameUI.drawText(0,0,"Vie: "+joueur.getLife());
+        gameUI.drawText(0,20,"Faim: "+joueur.getHunger());
+        gameUI.drawText(0,40,"Soif: "+joueur.getHydratation());
+        gameUI.drawText(0,60,"Moral: "+joueur.getMoral());
+        gameUI.drawText(0,80,"Diplomes: "+joueur.getDegree());
+        gameUI.drawText(0,100,"Arrestation: "+joueur.getArrest());
         joueur.Update();
         joueur.Draw();
 

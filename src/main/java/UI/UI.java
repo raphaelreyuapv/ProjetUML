@@ -2,16 +2,26 @@ package UI;
 
 import data.Boot;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class UI {
 
     private ArrayList<Button> buttonList;
+    private TrueTypeFont font;
+    private Font awtFont;
 
     public UI(){
         buttonList = new ArrayList<Button>();
+        awtFont = new Font("Times New Roman", Font.BOLD,24);
+        font = new TrueTypeFont(awtFont, false);
+    }
+
+    public void drawText(int x,int y, String text){
+        font.drawString(x,y,text);
     }
 
     public void addButton(String name, Texture texture, int x, int y){
