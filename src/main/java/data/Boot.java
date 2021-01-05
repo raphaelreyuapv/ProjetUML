@@ -12,6 +12,8 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 import static org.lwjgl.opengl.GL11.*;
 public class Boot {
+    static public int  width = 1280;
+    static public int height = 960;
 
     public Boot() {
         Display.setTitle("Projet_UML");
@@ -30,14 +32,12 @@ public class Boot {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         Texture t = LoadTexture("desert.png");
-        CaseGrille grid = new CaseGrille();
-        Hippie joueur = new Hippie(grid.getCase(grid.xstartingpoint,grid.ystartingpoint));
+        //CaseGrille grid = new CaseGrille();
+        //Hippie joueur = new Hippie(grid.getCase(grid.xstartingpoint,grid.ystartingpoint));
+        //Game game = new Game(null);
         while (!Display.isCloseRequested()) {
             Clock.update();
-            joueur.Update();
-
-            grid.Draw();
-            joueur.Draw();
+            StateManager.update();
             //DrawQuadTex(t,0,0,64,64);
             Display.update();
             Display.sync(60);

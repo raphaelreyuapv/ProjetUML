@@ -6,10 +6,10 @@ apply plugin:'java'
 //project.ext.lwjglVersion = "2.9.3"
 switch (OperatingSystem.current()) {
     case OperatingSystem.LINUX:
-        //project.ext.lwjglNatives = "natives-linux"
+        project.ext.lwjglNatives = "natives-linux"
         break
     case OperatingSystem.WINDOWS:
-        //project.ext.lwjglNatives = "natives-windows"
+        project.ext.lwjglNatives = "natives-windows"
         break
 }
 
