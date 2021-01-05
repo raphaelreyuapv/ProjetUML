@@ -8,6 +8,8 @@ import java.io.File;
 
 public class MainMenu {
 
+    static int nbDiplomeEnd;
+
     private Texture bg;
     private UI menuUI;
     private boolean fromgameover=false;
@@ -41,7 +43,7 @@ public class MainMenu {
         Boot.DrawQuadTex(bg,0,0,2048,1024);
         menuUI.draw();
         if(fromgameover==true){
-            menuUI.drawText(0,0,"Vous etez mort,pas de chance...");
+            menuUI.drawText(0,0,"Vous etez mort avec " + nbDiplomeEnd + " diplome(s), pas de chance...");
         }
         updateButtons();
     }
