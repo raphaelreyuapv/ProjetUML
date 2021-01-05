@@ -9,7 +9,7 @@ public class CaseGrille {
 
     public CaseGrille(){
         int rng;
-        boolean maison=false,universite=false,fastfood=false,bar=false;
+        boolean maison=false,universite=false,fastfood=false,bar=false,bibliotheque=false;
         map = new Case[20][15];
         for (int i = 0;i < map.length; i++){
             for(int j = 0;j < map[i].length;j++){
@@ -56,6 +56,14 @@ public class CaseGrille {
                             bar=true;
                         }else{
                             map[i][j]=new Foret(i * 64, j * 64, 64, 64);
+                        }
+                        break;
+                    case 7:
+                        if(!bibliotheque){
+                            map[i][j] = new Bibliotheque(i * 64, j * 64, 64, 64);
+                            bibliotheque=true;
+                        }else{
+                            map[i][j]=new Eau(i * 64, j * 64, 64, 64);
                         }
                         break;
                     default:
