@@ -1,5 +1,7 @@
 package data;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Hippie extends Personnage{
 
     public Hippie(Case caseDep){
@@ -21,27 +23,35 @@ public class Hippie extends Personnage{
 
     public void movement(Case a){
         super.movement(a);
-       if(a instanceof Batiment && precedentePosition instanceof Deplacement){
+
+       if(a instanceof Route){
+           this.hydratation -= 5;
+           this.hunger-= 5;
+
+           if(ThreadLocalRandom.current().nextInt(1, 201) <= 1) { //chance d accident
+                this.life = 0;
+           }
+       }
+       else if(a instanceof Batiment && precedentePosition instanceof Deplacement){
             this.life -= 0.5;
             this.hydratation -= 0.5;
             this.hunger-= 0.5;
             this.moral -= 0.5;
-           System.out.println("je passe dun trottoir a un batiment");
+           //System.out.println("je passe dun trottoir a un batiment");
         }
 
        else if(a instanceof Deplacement && precedentePosition instanceof Batiment){
            this.life -= 2;
            this.hydratation -= 2;
            this.hunger -= 2;
-           System.out.println("je passe dun batiment a un trottoir");
+           //System.out.println("je passe dun batiment a un trottoir");
        }
-
 
         else {
             this.life -= 2;
             this.hydratation -= 2;
             this.hunger -= 2;
-           System.out.println("else");
+           //System.out.println("else");
         }
         verifAttributs();
         System.out.println("vie:" + this.life + "; faim: " + hunger + " ;soif:" + hydratation + " ;moral:" + moral);

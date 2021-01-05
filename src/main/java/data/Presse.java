@@ -1,5 +1,7 @@
 package data;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Presse extends Personnage{
 
     public Presse(Case caseDep){
@@ -22,17 +24,35 @@ public class Presse extends Personnage{
 
     public void movement(Case a){
         super.movement(a);
-        if(a instanceof Batiment && precedentePosition instanceof Deplacement){
+
+        if(a instanceof Route && !drivingLicence){
+            this.hydratation -= 5;
+            this.hunger-= 5;
+
+            if(ThreadLocalRandom.current().nextInt(1, 201) <= 1) { //chance d accident
+                this.life = 0;
+            }
+        }
+
+        else if(a instanceof Route && drivingLicence){
+            this.moral -= 2;
+
+            if(ThreadLocalRandom.current().nextInt(1, 101) <= 2) { //chance d accident
+                this.life = 0;
+            }
+        }
+
+        else if(a instanceof Batiment && precedentePosition instanceof Deplacement){
             this.life -= 1;
             this.hydratation -= 1;
             this.hunger-= 1;
             this.moral -= 1;
-            System.out.println("je passe dun trottoir a un batiment");
+            //System.out.println("je passe dun trottoir a un batiment");
         }
 
         else if(a instanceof Deplacement && precedentePosition instanceof Batiment){
             this.moral -= 2;
-            System.out.println("je passe dun batiment a un trottoir");
+            //System.out.println("je passe dun batiment a un trottoir");
 
         }
         else {
