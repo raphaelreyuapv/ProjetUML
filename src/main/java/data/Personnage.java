@@ -297,6 +297,10 @@ public class Personnage {
                 hunger += 10;
                 hydratation += 10;
                 System.out.println("maison +10 partout");
+                if(ThreadLocalRandom.current().nextInt(1, 101) <= 50){
+                    this.swimsuit = true;
+                    System.out.println("Swimsuit obtenu");
+                }
             } else if (a instanceof Bibliotheque) {
                 livreGL = ThreadLocalRandom.current().nextInt(1, 101);
                 moral += 20;
