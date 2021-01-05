@@ -25,7 +25,7 @@ public class Personnage {
     private int width,height,health;
     private float speed,x,y;
     private boolean init = true;
-
+    String event="";
     // Constructeurs
 
     public Personnage(Texture tex,Case caseDepart,int width,int height,float speed) {
@@ -43,12 +43,12 @@ public class Personnage {
 
         if(ThreadLocalRandom.current().nextInt(1, 101) <= 50){
             this.drivingLicence = true;
-            System.out.println("Permis obtenu");
+            event = ("Permis obtenu");
         }
 
         if(ThreadLocalRandom.current().nextInt(1, 101) <= 50){
             this.swimsuit = true;
-            System.out.println("Swimsuit obtenu");
+            event = ("Swimsuit obtenu");
         }
 
     }
@@ -125,6 +125,10 @@ public class Personnage {
 
     public int getDegree() {
         return degree;
+    }
+
+    public String getEvent(){
+        return event;
     }
 
     public void setDegree(int degree) {
@@ -211,7 +215,7 @@ public class Personnage {
         if (this.life <= 0 || this.hunger <= 0 || this.hydratation <= 0 || this.moral <= 0 || this.arrest >= 3) {
             vivant = false;
             System.out.println("Fin de la partie votre personnage est décédé, vous avez obtenu " + degree + " diplomes.");
-            //INSERER ECRAN DE FIN
+
         }
         return vivant;
     }
@@ -254,37 +258,38 @@ public class Personnage {
         int livreGL;
         int obtentionDiplome;
         int enonceExam;
+        event = "";
 
         if ((a instanceof Deplacement) || (a instanceof Foret)) {
             accidentRoll = ThreadLocalRandom.current().nextInt(1, 101);
             if (a instanceof Foret && accidentRoll <= 10) {
                 life -= 10;
-                System.out.println("Maladie vie -10");
+                event = ("Maladie vie -10");
             } else if ((a instanceof Deplacement) && (accidentRoll <= 5)) {
                 piegeRoll = ThreadLocalRandom.current().nextInt(1, 4);
                 if (a instanceof Route) {
                     if (piegeRoll == 1) { // Feu rouge
                         life -= 1;
-                        System.out.println("Feu Rouge vie-1");
+                        event = ("Feu Rouge vie-1");
                     } else if (piegeRoll == 2 && drivingLicence) { // Police
                         moral -= 1;
                         arrest += 1;
-                        System.out.println("Police moral-1");
+                        event = ("Police moral-1");
                     } else if (piegeRoll == 3) { // Nid de poule
                         hydratation -= 2;
                         hunger -= 2;
-                        System.out.println("Nid de poule soif-2 faim-2");
+                        event = ("Nid de poule soif-2 faim-2");
                     }
                 } else if (a instanceof Trottoir) {
                     if (piegeRoll == 1) { // Banane
                         life -= 3;
-                        System.out.println("Banane vie -3");
+                        event = ("Banane vie -3");
                     } else if (piegeRoll == 2) { // Poussette
                         moral -= 2;
-                        System.out.println("Poussette moral-2");
+                        event = ("Poussette moral-2");
                     } else if (piegeRoll == 3) { // Déjection canine
                         hunger -= 1;
-                        System.out.println("Caca chien faim-1");
+                        event = ("Caca chien faim-1");
                     }
                 }
             }
@@ -296,42 +301,42 @@ public class Personnage {
                 moral += 10;
                 hunger += 10;
                 hydratation += 10;
-                System.out.println("maison +10 partout");
+                event = ("maison +10 partout");
                 if(ThreadLocalRandom.current().nextInt(1, 101) <= 50){
                     this.swimsuit = true;
-                    System.out.println("Swimsuit obtenu");
+                    event = ("Swimsuit obtenu");
                 }
             } else if (a instanceof Bibliotheque) {
                 livreGL = ThreadLocalRandom.current().nextInt(1, 101);
                 moral += 20;
-                System.out.println("bibliotheque +20 moral");
+                event = ("bibliotheque +20 moral");
                 if (livreGL <= 5) {
                     chance += 10;
-                    System.out.println("vous avez lu un livre de GL, chance de diplome +10%");
+                    event = ("vous avez lu un livre de GL, chance de diplome +10%");
                 }
             } else if (a instanceof FastFood) {
                 hunger += 25;
                 hydratation += 10;
                 moral += 10;
                 life -= 5;
-                System.out.println("FastFood faim +25 soif +10 moral +10 vie -5");
+                event = ("FastFood faim +25 soif +10 moral +10 vie -5");
             } else if (a instanceof Universite) {
                 obtentionDiplome = ThreadLocalRandom.current().nextInt(1, 101);
                 if (obtentionDiplome <= 30 + chance) {
                     degree += 1;
                     chance = 0;
                     moral += 5;
-                    System.out.println("Vous avez obtenu un diplome !!");
+                    event = ("Vous avez obtenu un diplome !!");
                 }
             } else if (a instanceof Bar) {
                 hydratation += 25;
                 moral += 10;
                 life -= 3;
-                System.out.println("Bar soif +25 moral +10 vie -3");
+                event = ("Bar soif +25 moral +10 vie -3");
                 enonceExam = ThreadLocalRandom.current().nextInt(1, 101);
                 if (enonceExam <= 5) {
                     chance += 5;
-                    System.out.println("Vous avez trouve l'enonce de l'examen, chance de diplome +5%");
+                    event = ("Vous avez trouve l'enonce de l'examen, chance de diplome +5%");
                 }
             }
         }

@@ -8,6 +8,7 @@ public class Game {
     private CaseGrille grid;
     private Personnage joueur;
     private UI gameUI = new UI();
+    private String PlayerEvent = "";
 
     public Game(String map,String perso){
         if(map==null){
@@ -34,6 +35,10 @@ public class Game {
         gameUI.drawText(0,60,"Moral: "+joueur.getMoral());
         gameUI.drawText(0,80,"Diplomes: "+joueur.getDegree());
         gameUI.drawText(0,100,"Arrestation: "+joueur.getArrest());
+        PlayerEvent = joueur.getEvent();
+        if(PlayerEvent != ""){
+            gameUI.drawText(0,120,PlayerEvent);
+        }
         joueur.Update();
         joueur.Draw();
 
