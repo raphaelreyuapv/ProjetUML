@@ -6,7 +6,7 @@ public class Standard extends Personnage{
 
 
     public Standard(Case caseDep){
-        super(Boot.LoadTexture("hipster.png"),caseDep,64,64,2);
+        super(Boot.LoadTexture("standard.png"),caseDep,64,64,2);
         this.life = 75;
         this.hydratation = 75;
         this.hunger = 75;

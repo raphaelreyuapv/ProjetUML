@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Presse extends Personnage{
 
     public Presse(Case caseDep){
-        super(Boot.LoadTexture("hipster.png"),caseDep,64,64,2);
+        super(Boot.LoadTexture("homme_presse.png"),caseDep,64,64,2);
         this.life = 100;
         this.hydratation = 75;
         this.hunger = 75;
