@@ -13,15 +13,16 @@ public class Personnage {
     String pseudo;
     int degree; //nb de diplomes
     int chance; //bonus pour le prochain diplome
-    int life;
-    int hydratation;
-    int hunger;
-    int moral;
+    float life;
+    float hydratation;
+    float hunger;
+    float moral;
     boolean swimsuit;
     int arrest;
     boolean drivingLicence;
     Texture texture;
     Case position;
+    Case precedentePosition;
     private int width,height,health;
     private float speed,x,y;
     private boolean init = true;
@@ -59,7 +60,7 @@ public class Personnage {
             init = false;//premiere init de la clock doit etre skip parceque c'est le jeu vien de se lancer et notre perso n'a pas a bouger
         }else {
             Case tempo;
-            while(Keyboard.next()) {
+            while(Keyboard.next() && alive()) {
                 if (Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState() && position.positionX/64+1<20){
 
 
@@ -128,7 +129,7 @@ public class Personnage {
         this.chance = chance;
     }
 
-    public int getLife() {
+    public float getLife() {
         return life;
     }
 
@@ -136,7 +137,7 @@ public class Personnage {
         this.life = life;
     }
 
-    public int getHydratation() {
+    public float getHydratation() {
         return hydratation;
     }
 
@@ -144,7 +145,7 @@ public class Personnage {
         this.hydratation = hydratation;
     }
 
-    public int getHunger() {
+    public float getHunger() {
         return hunger;
     }
 
@@ -152,7 +153,7 @@ public class Personnage {
         this.hunger = hunger;
     }
 
-    public int getMoral() {
+    public float getMoral() {
         return moral;
     }
 
@@ -232,6 +233,8 @@ public class Personnage {
     }
 
     public void movement(Case a) {
+
+        precedentePosition = this.position;
         this.position = a;
 
         // gestion des pieges
@@ -245,8 +248,7 @@ public class Personnage {
             accidentRoll = ThreadLocalRandom.current().nextInt(1, 101);
             if (a instanceof Foret && accidentRoll <= 10) {
                 life -= 10;
-            }
-            else if ((a instanceof Deplacement) && (accidentRoll <= 5)) {
+            } else if ((a instanceof Deplacement) && (accidentRoll <= 5)) {
                 piegeRoll = ThreadLocalRandom.current().nextInt(1, 4);
                 if (a instanceof Route) {
                     if (piegeRoll == 1) { // Feu rouge
@@ -258,9 +260,7 @@ public class Personnage {
                         hydratation -= 2;
                         hunger -= 2;
                     }
-                }
-
-                else if (a instanceof Trottoir) {
+                } else if (a instanceof Trottoir) {
                     if (piegeRoll == 1) { // Banane
                         life -= 3;
                     } else if (piegeRoll == 2) { // Poussette
@@ -273,46 +273,38 @@ public class Personnage {
         }
 
         ///////////
-        if(a instanceof Batiment){
-            if(a instanceof Maison){
+        if (a instanceof Batiment) {
+            if (a instanceof Maison) {
                 moral += 10;
                 hunger += 10;
                 hydratation += 10;
-            }
-            else if(a instanceof Bibliotheque){
+            } else if (a instanceof Bibliotheque) {
                 livreGL = ThreadLocalRandom.current().nextInt(1, 101);
                 moral += 20;
-                if(livreGL <= 5){
+                if (livreGL <= 5) {
                     chance += 10;
                 }
-            }
-
-            else if(a instanceof FastFood){
+            } else if (a instanceof FastFood) {
                 hunger += 25;
                 hydratation += 10;
                 moral += 10;
                 life -= 5;
-            }
-
-            else if(a instanceof Universite){
+            } else if (a instanceof Universite) {
                 obtentionDiplome = ThreadLocalRandom.current().nextInt(1, 101);
-                if(obtentionDiplome <= 30 + chance){
+                if (obtentionDiplome <= 30 + chance) {
                     degree += 1;
                     chance = 0;
                     moral += 5;
                 }
-            }
-
-            else if(a instanceof Bar){
+            } else if (a instanceof Bar) {
                 hydratation += 25;
                 moral += 10;
                 life -= 3;
                 enonceExam = ThreadLocalRandom.current().nextInt(1, 101);
-                if(enonceExam <= 5){
+                if (enonceExam <= 5) {
                     chance += 5;
                 }
             }
         }
-        verifAttributs();
     }
 }

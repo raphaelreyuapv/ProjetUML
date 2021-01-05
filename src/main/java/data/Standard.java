@@ -28,7 +28,13 @@ public class Standard extends Personnage{
         this.hunger-= 1;
         this.moral -= 1;
 
+        verifAttributs();
+        System.out.println("vie:" + this.life + "; faim: " + hunger + " ;soif:" + hydratation + " ;moral:" + moral);
 
+        if(!alive()){
+            System.out.println("Fin de la partie votre personnage est décédé, vous avez obtenu " + degree + " diplomes.");
+            //INSERER ECRAN DE FIN
+        }
     }
 
 }
