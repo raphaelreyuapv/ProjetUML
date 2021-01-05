@@ -13,6 +13,7 @@ public class StateManager {
     public static Game game;
     public static Charselect charSelect;
     public static String selected;
+    public static String loadgame=null;
 
     public static void update(){
         switch(gameState){
@@ -24,7 +25,7 @@ public class StateManager {
                 break;
             case GAME:
                 if (game == null){
-                    game = new Game("sauvegarde",selected);
+                    game = new Game(loadgame,selected);
                 }
                 game.update();
                 break;
@@ -46,6 +47,10 @@ public class StateManager {
 
     public static void setSelected(String sel){
         selected = sel;
+    }
+
+    public static void setLoadGame(String sel){
+        loadgame = sel;
     }
 
     public static void setState(GameState newState){
