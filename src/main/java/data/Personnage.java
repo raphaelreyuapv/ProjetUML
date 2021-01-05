@@ -22,7 +22,6 @@ public class Personnage {
     boolean drivingLicence;
     Texture texture;
     Case position;
-    Case precedentePosition;
     private int width,height,health;
     private float speed,x,y;
     private boolean init = true;
@@ -211,6 +210,8 @@ public class Personnage {
 
         if (this.life <= 0 || this.hunger <= 0 || this.hydratation <= 0 || this.moral <= 0 || this.arrest >= 3) {
             vivant = false;
+            System.out.println("Fin de la partie votre personnage est décédé, vous avez obtenu " + degree + " diplomes.");
+            //INSERER ECRAN DE FIN
         }
         return vivant;
     }
@@ -245,7 +246,6 @@ public class Personnage {
 
     public void movement(Case a) {
 
-        precedentePosition = this.position;
         this.position = a;
 
         // gestion des pieges

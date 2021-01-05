@@ -32,20 +32,13 @@ public class Hippie extends Personnage{
                 this.life = 0;
            }
        }
-       else if(a instanceof Batiment && precedentePosition instanceof Deplacement){
+       else if(a instanceof Batiment){
             this.life -= 0.5;
             this.hydratation -= 0.5;
             this.hunger-= 0.5;
             this.moral -= 0.5;
            //System.out.println("je passe dun trottoir a un batiment");
         }
-
-       else if(a instanceof Deplacement && precedentePosition instanceof Batiment){
-           this.life -= 2;
-           this.hydratation -= 2;
-           this.hunger -= 2;
-           //System.out.println("je passe dun batiment a un trottoir");
-       }
 
         else {
             this.life -= 2;
@@ -56,9 +49,8 @@ public class Hippie extends Personnage{
         verifAttributs();
         System.out.println("vie:" + this.life + "; faim: " + hunger + " ;soif:" + hydratation + " ;moral:" + moral);
 
-        if(!alive()){
-            System.out.println("Fin de la partie votre personnage est décédé, vous avez obtenu " + degree + " diplomes.");
-            //INSERER ECRAN DE FIN
-        }
+        alive();
+
+
     }
 }
