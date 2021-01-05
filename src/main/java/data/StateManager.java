@@ -14,12 +14,13 @@ public class StateManager {
     public static Charselect charSelect;
     public static String selected;
     public static String loadgame=null;
+    public static boolean died=false;
 
     public static void update(){
         switch(gameState){
             case MAINMENU:
                 if (mainMenu == null){
-                    mainMenu = new MainMenu();
+                    mainMenu = new MainMenu(died);
                 }
                 mainMenu.update();
                 break;
@@ -45,12 +46,22 @@ public class StateManager {
         }
     }
 
+    public static void reset(){
+        game = null;
+        charSelect = null;
+        mainMenu = null;
+        gameState = GameState.MAINMENU;
+    }
     public static void setSelected(String sel){
         selected = sel;
     }
 
     public static void setLoadGame(String sel){
         loadgame = sel;
+    }
+
+    public static void setDied(boolean sel){
+        died=sel;
     }
 
     public static void setState(GameState newState){

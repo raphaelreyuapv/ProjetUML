@@ -42,6 +42,11 @@ public class Game {
                 grid.SaveGrille("sauvegarde");
                 System.out.println("Saved");
             }
+        if(joueur.alive() == false){
+            StateManager.setDied(true);
+            StateManager.reset();
+
+        }
     }
 
 }

@@ -10,8 +10,10 @@ public class MainMenu {
 
     private Texture bg;
     private UI menuUI;
+    private boolean fromgameover=false;
     private boolean oneclick;//variable boolean pour empecher de recuperer des inputs sur plus de 1 frame
-    public MainMenu(){
+    public MainMenu(boolean fgo){
+        fromgameover=fgo;
         bg = Boot.LoadTexture("mainmenu.png");
         menuUI = new UI();
         menuUI.addButton("Play",Boot.LoadTexture("play.png"),Boot.width/2 - 128,(int) (Boot.height * 0.45f));
@@ -38,6 +40,9 @@ public class MainMenu {
     public void update(){
         Boot.DrawQuadTex(bg,0,0,2048,1024);
         menuUI.draw();
+        if(fromgameover==true){
+            menuUI.drawText(0,0,"Vous etez mort,pas de chance...");
+        }
         updateButtons();
     }
 
