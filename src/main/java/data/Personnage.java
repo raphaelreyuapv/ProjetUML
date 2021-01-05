@@ -13,10 +13,10 @@ public class Personnage {
     String pseudo;
     int degree; //nb de diplomes
     int chance; //bonus pour le prochain diplome
-    int life;
-    int hydratation;
-    int hunger;
-    int moral;
+    float life;
+    float hydratation;
+    float hunger;
+    float moral;
     boolean swimsuit;
     int arrest;
     boolean drivingLicence;
@@ -40,6 +40,17 @@ public class Personnage {
         this.swimsuit = false;
         this.arrest = 0;
         this.drivingLicence = false;
+
+        if(ThreadLocalRandom.current().nextInt(1, 101) <= 50){
+            this.drivingLicence = true;
+            System.out.println("Permis obtenu");
+        }
+
+        if(ThreadLocalRandom.current().nextInt(1, 101) <= 50){
+            this.swimsuit = true;
+            System.out.println("Swimsuit obtenu");
+        }
+
     }
 
     public Personnage(String pseudo) {
@@ -59,8 +70,7 @@ public class Personnage {
             init = false;//premiere init de la clock doit etre skip parceque c'est le jeu vien de se lancer et notre perso n'a pas a bouger
         }else {
             Case tempo;
-            while(Keyboard.next()) {
-
+            while(Keyboard.next() && alive()) {
                 if (Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState() && position.positionX/64+1<20){
 
 
@@ -129,7 +139,7 @@ public class Personnage {
         this.chance = chance;
     }
 
-    public int getLife() {
+    public float getLife() {
         return life;
     }
 
@@ -137,7 +147,7 @@ public class Personnage {
         this.life = life;
     }
 
-    public int getHydratation() {
+    public float getHydratation() {
         return hydratation;
     }
 
@@ -145,7 +155,7 @@ public class Personnage {
         this.hydratation = hydratation;
     }
 
-    public int getHunger() {
+    public float getHunger() {
         return hunger;
     }
 
@@ -153,7 +163,7 @@ public class Personnage {
         this.hunger = hunger;
     }
 
-    public int getMoral() {
+    public float getMoral() {
         return moral;
     }
 
@@ -200,6 +210,8 @@ public class Personnage {
 
         if (this.life <= 0 || this.hunger <= 0 || this.hydratation <= 0 || this.moral <= 0 || this.arrest >= 3) {
             vivant = false;
+            System.out.println("Fin de la partie votre personnage est décédé, vous avez obtenu " + degree + " diplomes.");
+            //INSERER ECRAN DE FIN
         }
         return vivant;
     }
@@ -233,6 +245,7 @@ public class Personnage {
     }
 
     public void movement(Case a) {
+
         this.position = a;
 
         // gestion des pieges
@@ -246,74 +259,81 @@ public class Personnage {
             accidentRoll = ThreadLocalRandom.current().nextInt(1, 101);
             if (a instanceof Foret && accidentRoll <= 10) {
                 life -= 10;
-            }
-            else if ((a instanceof Deplacement) && (accidentRoll <= 5)) {
+                System.out.println("Maladie vie -10");
+            } else if ((a instanceof Deplacement) && (accidentRoll <= 5)) {
                 piegeRoll = ThreadLocalRandom.current().nextInt(1, 4);
                 if (a instanceof Route) {
                     if (piegeRoll == 1) { // Feu rouge
                         life -= 1;
-                    } else if (piegeRoll == 2) { // Police
+                        System.out.println("Feu Rouge vie-1");
+                    } else if (piegeRoll == 2 && drivingLicence) { // Police
                         moral -= 1;
                         arrest += 1;
+                        System.out.println("Police moral-1");
                     } else if (piegeRoll == 3) { // Nid de poule
                         hydratation -= 2;
                         hunger -= 2;
+                        System.out.println("Nid de poule soif-2 faim-2");
                     }
-                }
-
-                else if (a instanceof Trottoir) {
+                } else if (a instanceof Trottoir) {
                     if (piegeRoll == 1) { // Banane
                         life -= 3;
+                        System.out.println("Banane vie -3");
                     } else if (piegeRoll == 2) { // Poussette
                         moral -= 2;
+                        System.out.println("Poussette moral-2");
                     } else if (piegeRoll == 3) { // Déjection canine
                         hunger -= 1;
+                        System.out.println("Caca chien faim-1");
                     }
                 }
             }
         }
 
         ///////////
-        if(a instanceof Batiment){
-            if(a instanceof Maison){
+        if (a instanceof Batiment) {
+            if (a instanceof Maison) {
                 moral += 10;
                 hunger += 10;
                 hydratation += 10;
-            }
-            else if(a instanceof Bibliotheque){
+                System.out.println("maison +10 partout");
+                if(ThreadLocalRandom.current().nextInt(1, 101) <= 50){
+                    this.swimsuit = true;
+                    System.out.println("Swimsuit obtenu");
+                }
+            } else if (a instanceof Bibliotheque) {
                 livreGL = ThreadLocalRandom.current().nextInt(1, 101);
                 moral += 20;
-                if(livreGL <= 5){
+                System.out.println("bibliotheque +20 moral");
+                if (livreGL <= 5) {
                     chance += 10;
+                    System.out.println("vous avez lu un livre de GL, chance de diplome +10%");
                 }
-            }
-
-            else if(a instanceof FastFood){
+            } else if (a instanceof FastFood) {
                 hunger += 25;
                 hydratation += 10;
                 moral += 10;
                 life -= 5;
-            }
-
-            else if(a instanceof Universite){
+                System.out.println("FastFood faim +25 soif +10 moral +10 vie -5");
+            } else if (a instanceof Universite) {
                 obtentionDiplome = ThreadLocalRandom.current().nextInt(1, 101);
-                if(obtentionDiplome <= 30 + chance){
+                if (obtentionDiplome <= 30 + chance) {
                     degree += 1;
                     chance = 0;
                     moral += 5;
+                    System.out.println("Vous avez obtenu un diplome !!");
                 }
-            }
-
-            else if(a instanceof Bar){
+            } else if (a instanceof Bar) {
                 hydratation += 25;
                 moral += 10;
                 life -= 3;
+                System.out.println("Bar soif +25 moral +10 vie -3");
                 enonceExam = ThreadLocalRandom.current().nextInt(1, 101);
-                if(enonceExam <= 5){
+                if (enonceExam <= 5) {
                     chance += 5;
+                    System.out.println("Vous avez trouve l'enonce de l'examen, chance de diplome +5%");
                 }
             }
         }
-        verifAttributs();
     }
 }
