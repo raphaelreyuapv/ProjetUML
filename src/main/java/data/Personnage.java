@@ -209,19 +209,19 @@ public class Personnage {
 
     // methodes
 
-    public Boolean alive() {
+    public Boolean alive() { //verifie que le personnage à toutes ses jauges supérieures à 0
         boolean vivant = true;
 
         if (this.life <= 0 || this.hunger <= 0 || this.hydratation <= 0 || this.moral <= 0 || this.arrest >= 3) {
             vivant = false;
-            System.out.println("Fin de la partie votre personnage est décédé, vous avez obtenu " + degree + " diplomes.");
+            System.out.println("Fin de la partie votre personnage est décédé, vous avez obtenu " + this.degree + " diplomes.");
             MainMenu.nbDiplomeEnd = degree;
 
         }
         return vivant;
     }
 
-    public void verifAttributs(){
+    public void verifAttributs(){ //permet que les jauges ne dépassent pas 0 ou 100
         if(moral > 100){
             moral = 100;
         }
@@ -249,7 +249,7 @@ public class Personnage {
 
     }
 
-    public void movement(Case a) {
+    public void movement(Case a) { // case a = case sur laquelle le personnage se déplace
 
         this.position = a;
 
@@ -262,8 +262,8 @@ public class Personnage {
         event = "";
 
         if ((a instanceof Deplacement) || (a instanceof Foret)) {
-            accidentRoll = ThreadLocalRandom.current().nextInt(1, 101);
-            if (a instanceof Foret && accidentRoll <= 10) {
+            accidentRoll = ThreadLocalRandom.current().nextInt(1, 101);//genere une valeure aléatoire entre 1 et 100
+            if (a instanceof Foret && accidentRoll <= 10) { // == 10%
                 life -= 10;
                 event = ("Maladie vie -10");
             } else if ((a instanceof Deplacement) && (accidentRoll <= 5)) {

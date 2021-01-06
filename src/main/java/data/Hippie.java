@@ -50,7 +50,5 @@ public class Hippie extends Personnage{
         System.out.println("vie:" + this.life + "; faim: " + hunger + " ;soif:" + hydratation + " ;moral:" + moral);
 
         alive();
-
-
     }
 }
