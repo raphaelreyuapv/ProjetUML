@@ -10,7 +10,7 @@ et le collez dans le ./bin de votre JDK pour Windows,dans le ./lib de votre JDK 
 
 Si vous exportez le jeu dans un .JAR il faut aussi prendre les assets et les mettres dans le meme dossier que le .JAR du jeu
 
-#Commande
+# Commande
 
 Menu Principal:Start permet de generer une nouvelle grille de jeu,Load permet de charger une grille préaleblement sauvegarder
 
