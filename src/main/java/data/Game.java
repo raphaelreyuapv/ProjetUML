@@ -35,9 +35,11 @@ public class Game {
         gameUI.drawText(0,60,"Moral: "+joueur.getMoral());
         gameUI.drawText(0,80,"Diplomes: "+joueur.getDegree());
         gameUI.drawText(0,100,"Arrestation: "+joueur.getArrest());
+        gameUI.drawText(0,120,"Maillot: "+joueur.isSwimsuit());
+        gameUI.drawText(0,140,"Permis: "+joueur.isDrivingLicence());
         PlayerEvent = joueur.getEvent();
         if(PlayerEvent != ""){
-            gameUI.drawText(0,120,PlayerEvent);
+            gameUI.drawText(0,160,PlayerEvent);
         }
         joueur.Update();
         joueur.Draw();

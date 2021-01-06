@@ -215,6 +215,7 @@ public class Personnage {
         if (this.life <= 0 || this.hunger <= 0 || this.hydratation <= 0 || this.moral <= 0 || this.arrest >= 3) {
             vivant = false;
             System.out.println("Fin de la partie votre personnage est décédé, vous avez obtenu " + degree + " diplomes.");
+            MainMenu.nbDiplomeEnd = degree;
 
         }
         return vivant;
